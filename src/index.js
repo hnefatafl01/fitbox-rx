@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import ClientList from './components/client_list';
+import ClientNew from './components/client_new';
 import ClientDetail from './components/client_detail';
 import reducers from './reducers';
 
@@ -19,6 +20,7 @@ ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <BrowserRouter>
             <Switch>
+                <Route path="/clients/new" component={ ClientNew } />
                 <Route path="/clients/:id" component={ ClientDetail } />
                 <Route path="/clients" component={ ClientList } />
                 <Route path="/" component={ ClientList } />

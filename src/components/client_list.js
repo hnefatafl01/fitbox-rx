@@ -12,24 +12,33 @@ class ClientList extends Component {
     renderClients() {
         return _.map(this.props.clients, client => {
             return ( 
-                <li
-                    className="list-group-item" 
-                    key={client._id}>
-                    <Link to={`/clients/${client._id}`}>
+                
+                    <Link className="list-group-item" 
+                    key={client._id} to={`/clients/${client._id}`}>
                      {client.name}
                     </Link>
-                </li>
+
             );
         });
+    }
+
+    handleAddClient() {
+        this.props.history.push('/clients/new');
     }
 
     render() {
         return (
             <div className="row">
                 <div className="col-12 col-md-3">
-                    <ul className="list-group">
+                    <div className="list-group">
+                        <button
+                            type="button"
+                            className="list-group-item list-group-item-action"
+                            onClick={this.handleAddClient.bind(this)}>
+                            Add Client
+                        </button>
                         {this.renderClients()}
-                    </ul>
+                    </div>
                 </div>
             </div>
         );
