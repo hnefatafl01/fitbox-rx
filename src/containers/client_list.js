@@ -23,7 +23,7 @@ class ClientList extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col-3">
+                <div className="col-12 col-md-3">
                     <ul className="list-group">
                         {this.renderClients()}
                     </ul>

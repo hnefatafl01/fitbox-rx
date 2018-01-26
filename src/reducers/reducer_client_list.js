@@ -4,8 +4,7 @@ import { FETCH_CLIENTS } from "../actions/index";
 export default function(state = [], action) {
     switch(action.type) {
         case FETCH_CLIENTS:
-            // for api access action.payload.data
-            return _.mapKeys(action.payload, '_id');
+            return _.mapKeys(action.payload.data.clients, '_id');
         default:
             return state;
     }
