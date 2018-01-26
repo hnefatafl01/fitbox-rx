@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchClients } from '../actions/index';
 import _ from 'lodash';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchClients } from '../actions/index';
 
 class ClientList extends Component {
     componentDidMount() {
@@ -14,7 +15,9 @@ class ClientList extends Component {
                 <li
                     className="list-group-item" 
                     key={client._id}>
-                    {client.name}
+                    <Link to={`/clients/${client._id}`}>
+                     {client.name}
+                    </Link>
                 </li>
             );
         });
