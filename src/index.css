@@ -7,3 +7,12 @@ body {
 form a {
   margin-left: 10px;
 }
+
+.input-error input[type]:first-of-type  {
+  border-color: #E93743!important;
+  outline: none 0;
+}
+
+.form-box {
+  margin-top: 10vh;
+}
