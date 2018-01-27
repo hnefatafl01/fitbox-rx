@@ -4,6 +4,7 @@ const ROOT_URL = 'http://localhost:5000';
 export const FETCH_CLIENTS = "FETCH_CLIENTS";
 export const FETCH_CLIENT = "FETCH_CLIENT";
 export const CREATE_CLIENT = "CREATE_CLIENT";
+export const DELETE_CLIENT = "DELETE_CLIENT";
 
 export function fetchClients() {
     const request = axios.get(`${ROOT_URL}/clients`);
@@ -26,6 +27,15 @@ export function createClient(values, callback) {
         .then(() => callback());
     return {
         type: CREATE_CLIENT,
+        payload: request
+    }
+}
+
+export function deleteClient(id, callback) {
+    const request = axios.delete(`${ROOT_URL}/clients/${id}/delete`)
+        .then(() => callback());
+    return {
+        type: DELETE_CLIENT,
         payload: request
     }
 }
