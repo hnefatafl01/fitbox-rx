@@ -6,7 +6,7 @@ export const CREATE_CLIENT = "CREATE_CLIENT";
 export const DELETE_CLIENT = "DELETE_CLIENT";
 
 export function fetchClients() {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTZjZmRjOWI0YjljZjAwMTQ5ZmY5MDkiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NTk3MDk5fQ.Q0H9qfTYbMM7jKok26jx5d7vXE2anjWOIkFGvICXbls";
+    const token = localStorage.getItem("x-auth");
     const request = axios.get(`${ROOT_URL}/clients`, { headers: { "x-auth": token}});
     return {
         type: FETCH_CLIENTS,
@@ -15,7 +15,8 @@ export function fetchClients() {
 }
 
 export function fetchClient(id) {
-    const request = axios.get(`${ROOT_URL}/clients/${id}`);
+    const token = localStorage.getItem("x-auth");
+    const request = axios.get(`${ROOT_URL}/clients/${id}`, { headers: { "x-auth": token}});
     return {
         type: FETCH_CLIENT,
         payload: request
@@ -23,7 +24,8 @@ export function fetchClient(id) {
 }
 
 export function createClient(values, callback) {
-    const request = axios.post(`${ROOT_URL}/clients`, values)
+    const token = localStorage.getItem("x-auth");
+    const request = axios.post(`${ROOT_URL}/clients`, values, { headers: { "x-auth": token}})
         .then(() => callback());
     return {
         type: CREATE_CLIENT,
@@ -32,7 +34,8 @@ export function createClient(values, callback) {
 }
 
 export function deleteClient(id, callback) {
-    const request = axios.delete(`${ROOT_URL}/clients/${id}/delete`)
+    const token = localStorage.getItem("x-auth");
+    const request = axios.delete(`${ROOT_URL}/clients/${id}/delete`, { headers: { "x-auth": token}})
         .then(() => callback());
     return {
         type: DELETE_CLIENT,

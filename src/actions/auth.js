@@ -19,8 +19,8 @@ export function signup(values, callback) {
 export function login(values, callback) {
     const request = axios.post(`${ROOT_URL}/user/login`, values)
         .then((res) => {
-            console.log('login action res', res)
-            // localStorage.setItem()
+            let token = res.headers['x-auth'];
+            localStorage.setItem('x-auth', token);
             callback();
         });
     return {
