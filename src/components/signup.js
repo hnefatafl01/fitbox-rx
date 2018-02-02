@@ -26,7 +26,7 @@ class Signup extends Component {
 
     onSubmit(values) {
         this.props.signup(values, () => {
-            // this.props.history.push('/clients');
+            this.props.history.push('/clients');
         });
     }
 

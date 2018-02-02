@@ -4,27 +4,35 @@ export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
 
 export function signup(values, callback) {
-    const request = axios.post(`${ROOT_URL}/user/signup`, values)
-        .then((res) => {
-            console.log('res', res);
-            callback();
-        });
-
-    return {
-        type: SIGNUP,
-        payload: request
-    }
-}
-
-export function login(values, callback) {
-    const request = axios.post(`${ROOT_URL}/user/login`, values)
+    axios.post(`${ROOT_URL}/user/signup`, values)
         .then((res) => {
             let token = res.headers['x-auth'];
             localStorage.setItem('x-auth', token);
+            console.log('signupres',res)
             callback();
         });
+
     return {
         type: SIGNUP,
-        payload: request
+        payload: "signup payload"
+    }
+}
+
+export async function login(values, callback) {
+    let r = await axios.post(`${ROOT_URL}/user/login`, values);
+    let token = r.headers['x-auth'];
+    let userdata = {
+        user: {
+            data: r.data,
+            authenticated:true,
+            token: token
+        }
+    }
+    localStorage.setItem('x-auth', token);
+    callback();
+
+    return {
+        type: LOGIN,
+        payload: userdata
     }
 }

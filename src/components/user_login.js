@@ -14,7 +14,7 @@ class Login extends Component {
             <div className={className}>
                 <label>{field.label}</label>
                 <input
-                    placeholder="email"
+                    placeholder={field.name}
                     className="form-control"
                     type={field.type}
                     { ...field.input }
@@ -25,14 +25,14 @@ class Login extends Component {
     }
 
     onSubmit(values) {
-        this.props.login(values, (res) => {
-            // this.props.history.push('/clients');
+        
+        this.props.login(values, () => {
+            this.props.history.push('/clients');
         });
     }
 
     render() {
         const { handleSubmit, invalid } = this.props;
-
         return (
             <div className="container">
                 <div className="row">
@@ -70,9 +70,13 @@ function validate(values) {
     return errors;
 }
 
+function mapStateToProps(state) {
+    return { user: state.userdata }
+}
+
 export default reduxForm({
     validate,
     form: 'LoginForm'
 })(
-    connect(null, { login })(Login)
+    connect(mapStateToProps, { login })(Login)
 );
