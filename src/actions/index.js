@@ -1,13 +1,13 @@
 import axios from 'axios';
-const ROOT_URL = 'http://localhost:5000';
-
+const ROOT_URL = process.env.REACT_APP_API_URL;
 export const FETCH_CLIENTS = "FETCH_CLIENTS";
 export const FETCH_CLIENT = "FETCH_CLIENT";
 export const CREATE_CLIENT = "CREATE_CLIENT";
 export const DELETE_CLIENT = "DELETE_CLIENT";
 
 export function fetchClients() {
-    const request = axios.get(`${ROOT_URL}/clients`);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTZjZmRjOWI0YjljZjAwMTQ5ZmY5MDkiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTE3NTk3MDk5fQ.Q0H9qfTYbMM7jKok26jx5d7vXE2anjWOIkFGvICXbls";
+    const request = axios.get(`${ROOT_URL}/clients`, { headers: { "x-auth": token}});
     return {
         type: FETCH_CLIENTS,
         payload: request
