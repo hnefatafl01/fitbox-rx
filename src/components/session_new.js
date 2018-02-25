@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import { createSession } from '../actions/plan';
 
-class Login extends Component {
+class SessionNew extends Component {
 
     renderField(field) {
         const { meta: { touched, error } } = field;
         const className = `form-group ${touched && error ? 'input-error' : '' }`;
-
         return (
             <div className={className}>
                 <label>{field.label}</label>
                 <input
-                    placeholder={field.name}
+                    placeholder="add client name"
                     className="form-control"
-                    type={field.type}
+                    type="text"
                     { ...field.input }
                 />
                 <div className="form-text text-danger">{ touched ? error : '' }</div>
@@ -25,13 +24,23 @@ class Login extends Component {
     }
 
     onSubmit(values) {
-        this.props.login(values, () => {
-            this.props.history.push('/clients');
+        this.props.createSession(values, () => {
+            this.props.history.push('/clients/:id');
         });
     }
 
     render() {
         const { handleSubmit, invalid } = this.props;
+
+        const token = sessionStorage.getItem('x-auth');
+        if (token == null) {
+            return <Redirect to={{
+                pathname: '/user/login',
+                state: { from: this.props.location }
+            }}/>
+            this.props.history.push('/user/login');
+        }
+
         return (
             <div className="container">
                 <div className="row">
@@ -39,17 +48,11 @@ class Login extends Component {
                         <div className="form-box">
                             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                                 <Field
-                                    label="Email"
-                                    name="email"
-                                    type="email"
+                                    label="Client Name"
+                                    name="name"
                                     component={this.renderField} />
-                                <Field
-                                    label="Password"
-                                    name="password"
-                                    type="password"
-                                    component={this.renderField} />
-                                <button className="btn btn-success" disabled={ invalid }>Submit</button>
-                                <Link to="/user/signup" >register new user</Link>
+                                <button className="btn btn-success" disabled={ invalid }>Save</button>
+                                <Link to="/clients" className="btn btn-danger">Cancel</Link>
                             </form>
                         </div>
                     </div>
@@ -62,8 +65,8 @@ class Login extends Component {
 function validate(values) {
     const errors = {}; //if no properties form is valid
 
-    if (!values.password) {
-        errors.password = "Add a name!";
+    if (!values.name) {
+        errors.name = "Add a name!";
     }  
     
     return errors;
@@ -71,7 +74,7 @@ function validate(values) {
 
 export default reduxForm({
     validate,
-    form: 'LoginForm'
+    form: 'SessionNewForm'
 })(
-    connect(null, { login })(Login)
+    connect(null, { createSession })(SessionNew)
 );

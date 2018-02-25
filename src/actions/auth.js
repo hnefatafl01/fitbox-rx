@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const ROOT_URL = process.env.REACT_APP_API_URL;
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
@@ -7,8 +8,7 @@ export function signup(values, callback) {
     axios.post(`${ROOT_URL}/user/signup`, values)
         .then((res) => {
             let token = res.headers['x-auth'];
-            localStorage.setItem('x-auth', token);
-            console.log('signupres',res)
+            sessionStorage.setItem('x-auth', token);
             callback();
         });
 
@@ -24,11 +24,11 @@ export async function login(values, callback) {
     let userdata = {
         user: {
             data: r.data,
-            authenticated:true,
+            authenticated: true,
             token: token
         }
     }
-    localStorage.setItem('x-auth', token);
+    sessionStorage.setItem('x-auth', token);
     callback();
 
     return {

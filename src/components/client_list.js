@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import ClientDetail from './client_detail';
 import { fetchClients } from '../actions/index';
 
@@ -22,14 +22,27 @@ class ClientList extends Component {
         });
     }
 
+    handleLogout() {
+        sessionStorage.removeItem("x-auth");
+        this.props.history.push('/user/login')
+    }
+
     handleAddClient() {
         this.props.history.push('/clients/new');
     }
 
     render() {
+        const token = sessionStorage.getItem('x-auth');
+        if (token === null) {
+            return <Redirect to={{
+                pathname: '/user/login',
+                state: { from: this.props.location }
+            }}/>
+        }
+
         return (
-            <div className="row">
-                <div className="col-12 col-md-3">
+            <div className="row dashboard__container">
+                <div className="col-10 col-md-3">
                     <div className="list-group">
                         <button
                             type="button"
@@ -42,6 +55,13 @@ class ClientList extends Component {
                 </div>
                 <div className="col-md-7">
                     <Route  path="/clients/:id" component={ ClientDetail } />
+                </div>
+                <div className="col-md-2">
+                    <button 
+                        onClick={this.handleLogout.bind(this)}
+                        className="btn btn-outline-secondary">
+                        logout
+                    </button>
                 </div>
             </div>
         );

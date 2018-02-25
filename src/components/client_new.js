@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createClient } from '../actions/index';
@@ -31,6 +31,15 @@ class ClientNew extends Component {
 
     render() {
         const { handleSubmit, invalid } = this.props;
+
+        const token = sessionStorage.getItem('x-auth');
+        if (token == null) {
+            return <Redirect to={{
+                pathname: '/user/login',
+                state: { from: this.props.location }
+            }}/>
+            this.props.history.push('/user/login');
+        }
 
         return (
             <div className="container">
