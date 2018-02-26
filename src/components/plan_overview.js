@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
+import { Plus } from 'react-feather';
 
 export default class PlanOverview extends Component {
   constructor(props) {
@@ -24,9 +25,11 @@ export default class PlanOverview extends Component {
         <Sparklines data={[5, 10, 5, 20]}>
           <SparklinesLine color="blue" />
         </Sparklines>
-
-        <button href="/plan" className="btn btn-primary" onClick={this.handleToggleAdd}>Add Session</button>
-        <button href="/plan/:id/edit" className="btn btn-primary">Edit Session</button>
+        <div className="d-flex justify-content-between">
+          <button className="btn btn-outline-info" onClick={this.handleToggleAdd}>
+            <Plus style={{'verticalAlign': 'middle'}}/>
+          </button>
+        </div>
       </div>
     )
   }

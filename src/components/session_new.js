@@ -48,7 +48,7 @@ class SessionNew extends Component {
                         <div className="form-box">
                             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                                 <Field
-                                    label="Client Name"
+                                    label="Exercise"
                                     name="name"
                                     component={this.renderField} />
                                 <button className="btn btn-success" disabled={ invalid }>Save</button>

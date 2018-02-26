@@ -43,10 +43,7 @@ class ClientDetail extends Component {
                     </h6>
                     <hr />
                     <p className="card-text">Client Training Overview</p>
-                    <Switch>
-                      <Route path="/plan/add" component={SessionNew} />
-                      <Route path="/plan" component={PlanOverview} />
-                    </Switch>
+                    <PlanOverview />
                 </div>
             </div>
         );
@@ -68,3 +65,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClientDetail);
 
+// <Switch>
+//   <Route path="/plan/add" component={SessionNew} />
+//   <Route path="/plan" component={PlanOverview} />
+// </Switch>
